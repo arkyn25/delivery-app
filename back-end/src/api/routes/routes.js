@@ -3,6 +3,7 @@ const sales = require('./sales');
 const salesProducts = require('./salesProducts');
 const product = require('./product');
 const register = require('./register');
+const userSeller = require('./userSeller');
 
 module.exports = {
   login,
@@ -10,4 +11,5 @@ module.exports = {
   salesProducts,
   product,
   register,
+  userSeller,
 };

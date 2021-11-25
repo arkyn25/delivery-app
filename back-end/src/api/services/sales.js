@@ -8,7 +8,7 @@ const getAllSalesById = async (id) => {
 };
 
 const createOrder = async (body) => {
-  const result = Sale.create({ 
+  const result = await Sale.create({ 
       ...body,
    });
   return result; 

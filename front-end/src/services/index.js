@@ -29,6 +29,10 @@ const getAllSalesProducts = () => api.get('/checkout');
 
 const register = (data) => api.post('/register', data);
 
+const getSellers = () => api.get('/sellers');
+
+const createSalesProducts = (order) => api.post('/salesProducts', order);
+
 export default {
   create,
   getAll,
@@ -37,4 +41,6 @@ export default {
   register,
   createOrder,
   setToken,
+  getSellers,
+  createSalesProducts,
 };

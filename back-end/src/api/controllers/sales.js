@@ -12,12 +12,11 @@ const sales = rescue(async (req, res) => {
 });
 
 const createOrder = rescue(async (req, res) => {
-  const token = req.headers.authorization;
-  console.log(token);
+  // const token = req.headers.authorization;
   const { id } = req.body;
   delete req.body.id;
   const result = await saleService.createOrder({
-     userId: id, sellerId: 1, ...req.body, status: 'PENDENTE' });
+     userId: id, ...req.body, status: 'Pendente' });
   if (!result) { return res.status(404).json({ message: 'Erro ao criar o pedido' }); }
   return res.status(201).json(result);
 });

@@ -79,7 +79,10 @@ export default function Checkout() {
           </tr>
         </tbody>
       </table>
-      <DetailsAddress totalPrice={ returnTotal().toFixed(2) } />
+      <DetailsAddress
+        totalPrice={ returnTotal().toFixed(2) }
+        salesProducts={ salesProducts }
+      />
     </div>
   );
 }

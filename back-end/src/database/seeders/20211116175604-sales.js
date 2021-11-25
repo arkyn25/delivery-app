@@ -10,7 +10,7 @@ module.exports = {
       total_price: 9.70,
       delivery_address: 'Rua Ribeiro do Amparo',
       delivery_number: 43,
-      status: 'PENDENTE'
+      status: 'Pendente'
     }
   ], {});
 

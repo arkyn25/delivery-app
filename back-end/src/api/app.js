@@ -14,6 +14,7 @@ app.use('/', routes.sales);
 app.use('/', routes.salesProducts);
 app.use('/', routes.product);
 app.use('/', routes.register);
+app.use('/', routes.userSeller);
 app.get('/coffee', (_req, res) => res.status(418).end());
 
 module.exports = app;

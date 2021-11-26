@@ -5,7 +5,6 @@ import Login from './pages/Login';
 import Register from './pages/register';
 import Customer from './pages/Customer';
 import Admin from './pages/Admin';
-// import Home from './pages/home';
 import OrderClient from './pages/OrderClient';
 import Checkout from './pages/Checkout';
 import OrderDetails from './pages/OrderDetails';

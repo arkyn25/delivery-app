@@ -20,6 +20,10 @@ const getAll = async () => Sale.findAll({
   include: [{ model: Product, as: 'products' }],
 });
 
+const getAllByUserId = async ({ id }) => Sale.findAll({
+  where: { userId: id },
+    include: [{ model: Product, as: 'products', through: { attributes: [] } }] });
+
 const createSalesProducts = async (body) => {
   const { products, saleId } = body;
   Object.values(products).forEach(async ({ name, quant }) => {
@@ -34,6 +38,7 @@ const createSalesProducts = async (body) => {
 
 module.exports = {
   getAll,
+  getAllByUserId,
   createSalesProducts,
   getAllSalesProductsBySeleId,
 };

@@ -9,23 +9,12 @@ export default function Customer() {
   const [changes, setChanges] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  // const fetchProducts = async () => {
-  //   try {
-  //     const response = await fetch('http://localhost:3001/products');
-  //     const prods = await response.json();
-  //     setProducts(prods);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   useEffect(() => {
     (async () => {
       const { data } = await api.getAllProducts();
       setProducts(data);
     })();
     localStorage.setItem('products', JSON.stringify({}));
-    // fetchProducts();
   }, []);
 
   useEffect(() => {

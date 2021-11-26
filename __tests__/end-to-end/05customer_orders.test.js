@@ -46,7 +46,7 @@ beforeEach(async () => {
       values: [3, 10],
     })
   );
- console.log(orderList, ' ======== cheguei no array do teste');
+
 });
 
 describe(requirement(22), () => {

@@ -6,12 +6,7 @@ const getAllSalesProductsBySeleId = async (saleId) => {
     where: { saleId },
     include: [{ model: Product, as: 'products' }],
   });
-  // const products = result.map(async ({ productId }) => Product.findOne({
-  //   raw: true,
-  //   where: { id: productId },
-  // }));
 
-  // const data = Promise.all(products);
   return result;
 };
 
@@ -22,7 +17,7 @@ const getAll = async () => Sale.findAll({
 
 const getAllByUserId = async ({ id }) => Sale.findAll({
   where: { userId: id },
-    include: [{ model: Product, as: 'products', through: { attributes: [] } }] });
+  include: [{ model: Product, as: 'products', through: { attributes: [] } }] });
 
 const createSalesProducts = async (body) => {
   const { products, saleId } = body;

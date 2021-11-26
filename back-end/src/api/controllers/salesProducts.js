@@ -8,7 +8,6 @@ const getAll = rescue(async (req, res) => {
 });
 
 const createSalesProducts = rescue(async (req, res) => {
-  console.log('controller');
   const result = await salesProductsService.createSalesProducts(req.body);
   if (!result) { return res.status(404).json({ message: 'nao criou' }); }
   return res.status(200).json(result);
@@ -22,7 +21,9 @@ const getAllByUserId = rescue(async (req, res) => {
 });
 
 const getAllSalesProductsBySeleId = rescue(async (req, res) => {
-  const result = await salesProductsService.getAllSalesProductsBySeleId(req.body.saleId);
+  const { id } = req.params;
+  console.log(id);
+  const result = await salesProductsService.getAllSalesProductsBySeleId(saleId);
   return res.json(result);
 });
 

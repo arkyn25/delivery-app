@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Joi from 'joi';
 import { useValidator } from 'react-joi';
 import { Link } from 'react-router-dom';
-// import api from '../services';
 import NotFound from '../components/notFound';
 import userLogin from '../services/authLogin';
 
@@ -53,37 +52,17 @@ export default function Login() {
     }));
   };
 
-  // const redirect = ({ role }) => {
-  //   switch (role) {
-  //   case 'administrator': return window.location.replace('/admin/manage');
-  //   case 'customer': return window.location.replace('/customer/products');
-  //   case 'seller': return window.location.replace('/customer/seller');
-  //   default:
-  //     break;
-  //   }
-  // };
+  const userAlreadyLogin = () => {
+    const tokenUser = JSON.parse(localStorage.getItem('user'));
 
-  // const userLogin = async () => {
-  //   try {
-  //     const user = state.$data;
-  //     const { data } = await api.create(user);
-  //     console.log(data);
-  //     localStorage.setItem('user', JSON.stringify(
-  //       {
-  //         nome: data.data.name,
-  //         email: data.data.email,
-  //         id: data.data.id,
-  //         token: data.token },
-  //     ));
-  //     localStorage.setItem('products', JSON.stringify({}));
-  //     redirect(data.data);
-  //   } catch (error) {
-  //     setIsErr(true);
-  //     console.log(error);
-  //   }
-  // };
+    if (!tokenUser) {
+      return false;
+    }
 
-  return (
+    window.location.replace('/customer/products');
+  };
+
+  const renderLoginPage = () => (
     <>
       <form>
 
@@ -139,5 +118,11 @@ export default function Login() {
 
       {isErr && <NotFound />}
     </>
+  );
+
+  return (
+    <main>
+      { !userAlreadyLogin() && renderLoginPage()}
+    </main>
   );
 }

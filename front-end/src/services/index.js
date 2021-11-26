@@ -35,7 +35,7 @@ const getSellers = () => api.get('/sellers');
 const createSalesProducts = (order) => api.post('/salesProducts', order);
 const getAllSalesProductsbySaleId = (saleId) => api.post('/salesProducts', { saleId });
 
-const getAllProducts = () => api.get('/products');
+const getAllProducts = () => api.get('/customer/products');
 
 const getAllSalesProductsById = (saleId) => api.get('/customer/orders/:id', { saleId });
 

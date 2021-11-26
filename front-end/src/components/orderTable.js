@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
-// import api from '../services/index';
+import { useParams } from 'react-router-dom';
+import api from '../services';
 
 const tableHead = [
   'Item',
@@ -10,6 +10,7 @@ const tableHead = [
   'Sub-total',
   'Remover Item',
 ];
+
 const orderTable = 'customer_checkout__element-order-table-item-number-';
 const nameTable = 'customer_checkout__element-order-table-name-';
 const quantityTable = 'customer_checkout__element-order-table-quantity-';
@@ -17,34 +18,24 @@ const unitPriceTable = 'customer_checkout__element-order-table-unit-price-';
 const subTotalTable = 'customer_checkout__element-order-table-sub-total-';
 
 function OrderTable() {
-  const [salesDetails, setSalesDetails] = useState([]);
+  const [productsOrder, setProductsOrder] = useState([]);
+  const { id } = useParams();
 
-  const fetchProducts = async () => {
-    try {
-      const response = await fetch('http://localhost:3001/customer/orders/:id');
-      const prods = await response.json();
-      setSalesDetails(prods);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  // useEffect(() => {
-  //   api().then(({ data }) => {
-  //     setSalesDetails(data);
-  //   });
-  // }, []);
+    (async () => {
+      const products = await api.getAllSalesProductsbySaleId(id);
+      console.log(`Produtos${products}`);
+      setProductsOrder(products);
+    })();
+  }, [id]);
+  console.log(`Estou aqui ${productsOrder}`);
   const productPrice = (price) => {
-    const min = 3;
-    const newPrice = price.toString().replace('.', ',');
-    if (newPrice.length === min) return `${newPrice}0`;
+    const fixedPrice = Number.parseFloat(price).toFixed(2);
+    const newPrice = fixedPrice.toString().replace('.', ',');
     return newPrice;
   };
 
-  const returnTotal = () => Object.values(salesDetails).reduce((acc, { total }) => {
+  const returnTotal = () => Object.values(productsOrder).reduce((acc, { total }) => {
     acc += total; return acc;
   }, 0);
 
@@ -60,7 +51,7 @@ function OrderTable() {
         </tr>
       </thead>
       <tbody>
-        {salesDetails.map(({ price, quant, name, total }, index) => (
+        {productsOrder.map(({ price, quant, name, total }, index) => (
           <tr key={ index }>
             <td data-testid={ `${orderTable}${index}` }>{index + 1}</td>
             <td data-testid={ `${nameTable}${index}` }>{name}</td>

@@ -39,6 +39,8 @@ const getAllProducts = () => api.get('/customer/products');
 
 const getAllSalesProductsById = (saleId) => api.get('/customer/orders/:id', { saleId });
 
+const getAllSalesBySellerId = (sellerId) => api.get(`/seller/orders/:${sellerId}`);
+
 export default {
   create,
   getAll,
@@ -53,4 +55,5 @@ export default {
   getAllProducts,
   getAllSalesProductsbySaleId,
   registerByAdmin,
+  getAllSalesBySellerId,
 };

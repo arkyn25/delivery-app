@@ -37,6 +37,8 @@ const getAllSalesProductsbySaleId = (saleId) => api.post('/salesProducts', { sal
 
 const getAllProducts = () => api.get('/products');
 
+const getAllSalesProductsById = (saleId) => api.get('/customer/orders/:id', { saleId });
+
 export default {
   create,
   getAll,
@@ -47,6 +49,7 @@ export default {
   setToken,
   getSellers,
   createSalesProducts,
+  getAllSalesProductsById,
   getAllProducts,
   getAllSalesProductsbySaleId,
   registerByAdmin,

@@ -21,7 +21,6 @@ function App() {
       <Route path="customer/orders/" element={ <OrderClient /> } />
       <Route path="customer/orders/:id" element={ <OrderDetails /> } />
       <Route path="customer/checkout" element={ <Checkout /> } />
-      <Route path="customer/orders/:id" element={ <OrderDetails /> } />
     </Routes>
   );
 }

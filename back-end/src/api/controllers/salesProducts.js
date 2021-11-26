@@ -15,7 +15,7 @@ const createSalesProducts = rescue(async (req, res) => {
 
 const getAllByUserId = rescue(async (req, res) => {
   const { id } = req.params;
-  const result = await salesProductsService.getAllByUserId({ id });
+  const result = await salesProductsService.getAllByUserId(id);
   if (!result) { return res.status(404).json({ message: 'erro' }); }
   return res.status(200).json(result);
 });

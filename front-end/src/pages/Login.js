@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import Joi from 'joi';
 import { useValidator } from 'react-joi';
 import { Link } from 'react-router-dom';
-import api from '../services';
+// import api from '../services';
 import NotFound from '../components/notFound';
+import userLogin from '../services/authLogin';
 
 export default function Login() {
-  // const history = useHistory();
   const SIX = 6;
   const { state, setData, setExplicitField, validate } = useValidator({
     initialData: {
@@ -28,7 +28,6 @@ export default function Login() {
 
   const [isDisabled, setIsDisable] = useState(true);
   const [isErr, setIsErr] = useState(false);
-  // const [user, setUser] = useState({});
 
   useEffect(() => {
     const disabled = state.$all_source_errors.length !== 0;
@@ -54,27 +53,35 @@ export default function Login() {
     }));
   };
 
-  const redirect = ({ role }) => {
-    switch (role) {
-    case 'administrator': return window.location.replace('/customer/products');
-    case 'customer': return window.location.replace('/customer/products');
-    case 'seller': return window.location.replace('/customer/seller');
-      // case 'seller':
-    default:
-      break;
-    }
-  };
+  // const redirect = ({ role }) => {
+  //   switch (role) {
+  //   case 'administrator': return window.location.replace('/admin/manage');
+  //   case 'customer': return window.location.replace('/customer/products');
+  //   case 'seller': return window.location.replace('/customer/seller');
+  //   default:
+  //     break;
+  //   }
+  // };
 
-  const userLogin = async () => {
-    try {
-      const user = state.$data;
-      const { data } = await api.create(user);
-      // setUser(response);
-      redirect(data);
-    } catch (error) {
-      setIsErr(true);
-    }
-  };
+  // const userLogin = async () => {
+  //   try {
+  //     const user = state.$data;
+  //     const { data } = await api.create(user);
+  //     console.log(data);
+  //     localStorage.setItem('user', JSON.stringify(
+  //       {
+  //         nome: data.data.name,
+  //         email: data.data.email,
+  //         id: data.data.id,
+  //         token: data.token },
+  //     ));
+  //     localStorage.setItem('products', JSON.stringify({}));
+  //     redirect(data.data);
+  //   } catch (error) {
+  //     setIsErr(true);
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <>
@@ -105,7 +112,6 @@ export default function Login() {
           />
         </label>
         <br />
-        {/* {state.$errors.password.map((data) => data.$message).join(',')} */}
         <br />
       </form>
 
@@ -114,7 +120,7 @@ export default function Login() {
         name="loginButton"
         data-testid="common_login__button-login"
         disabled={ isDisabled }
-        onClick={ async () => { validate(); await userLogin(); } }
+        onClick={ async () => { validate(); await userLogin(state, setIsErr); } }
       >
         Login
 

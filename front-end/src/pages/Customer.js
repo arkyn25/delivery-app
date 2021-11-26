@@ -2,25 +2,30 @@ import React, { useState, useEffect } from 'react';
 import NavBar from '../components/navBar';
 import ProdCartButton from '../components/prodCartButton';
 import ProductCard from '../components/productCard';
+import api from '../services';
 
 export default function Customer() {
   const [products, setProducts] = useState([]);
   const [changes, setChanges] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const fetchProducts = async () => {
-    try {
-      const response = await fetch('http://localhost:3001/products');
-      const prods = await response.json();
-      setProducts(prods);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const fetchProducts = async () => {
+  //   try {
+  //     const response = await fetch('http://localhost:3001/products');
+  //     const prods = await response.json();
+  //     setProducts(prods);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   useEffect(() => {
+    (async () => {
+      const { data } = await api.getAllProducts();
+      setProducts(data);
+    })();
     localStorage.setItem('products', JSON.stringify({}));
-    fetchProducts();
+    // fetchProducts();
   }, []);
 
   useEffect(() => {
@@ -41,7 +46,7 @@ export default function Customer() {
             setChanges={ setChanges }
           />
         )) : <h1>loading</h1>}
-        <ProdCartButton totalPrice={ totalPrice } />
+        <ProdCartButton totalPrice={ +totalPrice } />
       </div>
     </div>
   );

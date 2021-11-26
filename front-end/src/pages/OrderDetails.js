@@ -1,36 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import NavBar from '../components/navBar';
-import OrderTable from '../components/orderTable';
-
-export default function OrderDetails() {
-  return (
-    <>
-      <NavBar />
-
-      <p>Detalhe do pedido</p>
-      <span data-testid="customer_order_details__element-order-details-label-order-id">
-        id
-      </span>
-      <span data-testid="customer_order_details__element-order-details-label-seller-name">
-        Pessoa vendedora
-      </span>
-      <span data-testid="customer_order_details__element-order-details-label-order-date">
-        data da venda
-      </span>
-      <span
-        data-testid="customer_order_details__element-order-details-label-delivery-status"
-      >
-        status do pedido
-      </span>
-      <span data-testid="customer_order_details__button-delivery-check">
-        botao marcar como entregue
-      </span>
-      <OrderTable />
-    </>
-  );
-}
-=======
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react/cjs/react.development';
@@ -66,4 +33,3 @@ export default function OrderDetails() {
 // OrderDetails.propTypes = {
 //   totalPrice: PropTypes.number.isRequired,
 // };
->>>>>>> a18a561ea84efdccccfb77db2ef09b3d644f98ce

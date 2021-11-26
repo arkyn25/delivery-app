@@ -28,6 +28,7 @@ const createOrder = (order) => api
 const getAllSalesProducts = () => api.get('/checkout');
 
 const register = (data) => api.post('/register', data);
+const registerByAdmin = (data) => api.post('/register/admin', data);
 
 const getSellers = () => api.get('/sellers');
 
@@ -48,4 +49,5 @@ export default {
   createSalesProducts,
   getAllProducts,
   getAllSalesProductsbySaleId,
+  registerByAdmin,
 };

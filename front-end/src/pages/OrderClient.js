@@ -10,8 +10,8 @@ function OrderClient() {
 
   useEffect(() => {
     (async () => {
-      const salesUsers = await (await api.getAllSales(tokenUser)).data;
-      setSales(salesUsers);
+      const { data } = await api.getAllSales(tokenUser);
+      setSales(data);
     })();
   }, [tokenUser]);
 

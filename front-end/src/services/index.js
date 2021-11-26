@@ -32,6 +32,9 @@ const register = (data) => api.post('/register', data);
 const getSellers = () => api.get('/sellers');
 
 const createSalesProducts = (order) => api.post('/salesProducts', order);
+const getAllSalesProductsbySaleId = (saleId) => api.post('/salesProducts', { saleId });
+
+const getAllProducts = () => api.get('/products');
 
 const getAllSalesProductsById = (saleId) => api.get('/customer/orders/:id', { saleId });
 
@@ -46,4 +49,6 @@ export default {
   getSellers,
   createSalesProducts,
   getAllSalesProductsById,
+  getAllProducts,
+  getAllSalesProductsbySaleId,
 };

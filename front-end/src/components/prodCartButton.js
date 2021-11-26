@@ -6,9 +6,8 @@ function ProdCartButton({ totalPrice }) {
   const navigate = useNavigate();
 
   const productPrice = (price) => {
-    const min = 3;
-    const newPrice = price.toString().replace('.', ',');
-    if (newPrice.length === min) return `${newPrice}0`;
+    const fixedPrice = Number.parseFloat(price).toFixed(2);
+    const newPrice = fixedPrice.toString().replace('.', ',');
     return newPrice;
   };
 
@@ -21,12 +20,11 @@ function ProdCartButton({ totalPrice }) {
         data-testid="customer_products__button-cart"
 
       >
+        Ver Carrinho:  R$
         <span
           data-testid="customer_products__checkout-bottom-value"
         >
-          {
-            `Ver Carrinho:  R$ ${productPrice(totalPrice)}`
-          }
+          { productPrice(totalPrice)}
         </span>
       </button>
     </div>

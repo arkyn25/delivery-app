@@ -1,5 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+
+// import api from '../services/index';
 
 const tableHead = [
   'Item',
@@ -14,10 +15,39 @@ const nameTable = 'customer_checkout__element-order-table-name-';
 const quantityTable = 'customer_checkout__element-order-table-quantity-';
 const unitPriceTable = 'customer_checkout__element-order-table-unit-price-';
 const subTotalTable = 'customer_checkout__element-order-table-sub-total-';
-const removeTable = 'customer_checkout__element-order-table-remove-';
 
-function OrderTable(props) {
-  const { salesProducts: { price, quant, name, total } } = props;
+function OrderTable() {
+  const [salesDetails, setSalesDetails] = useState([]);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/customer/orders/:id');
+      const prods = await response.json();
+      setSalesDetails(prods);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  // useEffect(() => {
+  //   api().then(({ data }) => {
+  //     setSalesDetails(data);
+  //   });
+  // }, []);
+  const productPrice = (price) => {
+    const min = 3;
+    const newPrice = price.toString().replace('.', ',');
+    if (newPrice.length === min) return `${newPrice}0`;
+    return newPrice;
+  };
+
+  const returnTotal = () => Object.values(salesDetails).reduce((acc, { total }) => {
+    acc += total; return acc;
+  }, 0);
+
   return (
     <table>
       <thead>
@@ -30,7 +60,7 @@ function OrderTable(props) {
         </tr>
       </thead>
       <tbody>
-        {salesProducts.map(({ price, quant, name, total }, index) => (
+        {salesDetails.map(({ price, quant, name, total }, index) => (
           <tr key={ index }>
             <td data-testid={ `${orderTable}${index}` }>{index + 1}</td>
             <td data-testid={ `${nameTable}${index}` }>{name}</td>
@@ -40,16 +70,6 @@ function OrderTable(props) {
               data-testid={ `${subTotalTable}${index}` }
             >
               {productPrice(total.toFixed(2))}
-            </td>
-            <td>
-              <button
-                type="button"
-                onClick={ () => removeItem(name) }
-                data-testid={ `${removeTable}${index}` }
-              >
-                Remover
-
-              </button>
             </td>
           </tr>
         ))}
@@ -63,9 +83,5 @@ function OrderTable(props) {
     </table>
   );
 }
-
-OrderTable.propTypes = {
-  salesProducts: PropTypes.arrayOf(PropTypes).isRequired,
-};
 
 export default OrderTable;

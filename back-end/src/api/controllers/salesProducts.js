@@ -21,8 +21,14 @@ const getAllByUserId = rescue(async (req, res) => {
   return res.status(200).json(result);
 });
 
+const getAllSalesProductsBySeleId = rescue(async (req, res) => {
+  const result = await salesProductsService.getAllSalesProductsBySeleId(req.body.saleId);
+  return res.json(result);
+});
+
 module.exports = {
   getAll,
   getAllByUserId,
   createSalesProducts,
+  getAllSalesProductsBySeleId,
 };

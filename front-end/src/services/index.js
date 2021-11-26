@@ -33,7 +33,7 @@ const registerByAdmin = (data) => api.post('/register/admin', data);
 const getSellers = () => api.get('/sellers');
 
 const createSalesProducts = (order) => api.post('/salesProducts', order);
-const getAllSalesProductsbySaleId = (id) => api.post(`/salesProducts/${id}`);
+const getAllSalesProductsbySaleId = (id) => api.get(`/salesProducts/${id}`);
 
 const getAllProducts = () => api.get('/customer/products');
 

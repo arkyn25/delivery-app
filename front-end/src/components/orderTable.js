@@ -23,21 +23,20 @@ function OrderTable() {
 
   useEffect(() => {
     (async () => {
-      const products = await api.getAllSalesProductsbySaleId(id);
-      console.log(`Produtos${products}`);
-      setProductsOrder(products);
+      const { data } = await api.getAllSalesProductsbySaleId(id);
+      setProductsOrder(data);
     })();
   }, [id]);
-  console.log(`Estou aqui ${productsOrder}`);
   const productPrice = (price) => {
     const fixedPrice = Number.parseFloat(price).toFixed(2);
     const newPrice = fixedPrice.toString().replace('.', ',');
     return newPrice;
   };
 
-  const returnTotal = () => Object.values(productsOrder).reduce((acc, { total }) => {
-    acc += total; return acc;
-  }, 0);
+  const returnTotal = () => Object.values(productsOrder)
+    .reduce((acc, { products: { price }, quantity }) => {
+      acc += price * quantity; return acc;
+    }, 0);
 
   return (
     <table>
@@ -51,16 +50,16 @@ function OrderTable() {
         </tr>
       </thead>
       <tbody>
-        {productsOrder.map(({ price, quant, name, total }, index) => (
+        {productsOrder.map(({ products: { name, price }, quantity }, index) => (
           <tr key={ index }>
             <td data-testid={ `${orderTable}${index}` }>{index + 1}</td>
             <td data-testid={ `${nameTable}${index}` }>{name}</td>
-            <td data-testid={ `${quantityTable}${index}` }>{quant}</td>
+            <td data-testid={ `${quantityTable}${index}` }>{quantity}</td>
             <td data-testid={ `${unitPriceTable}${index}` }>{productPrice(price)}</td>
             <td
               data-testid={ `${subTotalTable}${index}` }
             >
-              {productPrice(total.toFixed(2))}
+              {productPrice((price * quantity).toFixed(2))}
             </td>
           </tr>
         ))}

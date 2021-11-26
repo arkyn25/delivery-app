@@ -22,7 +22,6 @@ const getAllByUserId = rescue(async (req, res) => {
 
 const getAllSalesProductsBySeleId = rescue(async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   const result = await salesProductsService.getAllSalesProductsBySeleId(id);
   return res.json(result);
 });

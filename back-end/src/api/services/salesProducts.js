@@ -2,7 +2,6 @@ const { Sale, Product, SalesProducts } = require('../../database/models');
 
 const getAllSalesProductsBySeleId = async (saleId) => {
   const result = await SalesProducts.findAll({
-    raw: true,
     where: { saleId },
     include: [{ model: Product, as: 'products' }],
   });

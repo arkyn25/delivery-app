@@ -21,6 +21,7 @@ const create = (data) => api.post('/login', data);
 const getAll = (data) => api.get('/login', data);
 
 const getAllSales = (tokenLogin) => api.get('/sales', config(tokenLogin));
+const getSaleById = (id) => api.get(`/sales/${id}`);
 
 const createOrder = (order) => api
   .post('/customer/orders', order);
@@ -50,4 +51,5 @@ export default {
   getAllProducts,
   getAllSalesProductsbySaleId,
   registerByAdmin,
+  getSaleById,
 };

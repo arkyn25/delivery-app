@@ -21,7 +21,15 @@ const createOrder = rescue(async (req, res) => {
   return res.status(201).json(result);
 });
 
+const getSaleById = async (req, res) => {
+  const { id } = req.params;
+  const result = await saleService.getSaleById(id);
+  if (!result) { return res.status(404).json({ message: 'Erro ao pegar os pedido' }); }
+  return res.status(200).json(result);
+};
+
 module.exports = {
   sales,
   createOrder,
+  getSaleById,
 };

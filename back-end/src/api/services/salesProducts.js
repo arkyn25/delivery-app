@@ -12,6 +12,15 @@ const getAllSalesProductsBySeleId = async (saleId) => {
   return result;
 };
 
+const updateSalesProductsBySeleId = async (id, status) => {
+  const result = await Sale.update(
+    { status },
+    { where: { id } },
+  );
+
+  return result;
+};
+
 const getAll = async () => Sale.findAll({
   attributes: { exclude: ['urlImage'] },
   include: [{ model: Product, as: 'products', through: { attributes: [] } }],
@@ -39,4 +48,5 @@ module.exports = {
   getAllByUserId,
   createSalesProducts,
   getAllSalesProductsBySeleId,
+  updateSalesProductsBySeleId,
 };

@@ -6,6 +6,7 @@ import api from '../services';
 import SellerCardDetails from '../components/sellerCardDetails';
 
 export default function SellerOrderDetails() {
+  const [saleStatus, setSalesStatus] = useState('Pendente');
   const [salesInfo, setSalesInfo] = useState(
     {
       id: 0,
@@ -31,10 +32,15 @@ export default function SellerOrderDetails() {
   useEffect(() => {
     (async () => {
       const { data } = await api.getAllSalesProductsbySaleId(id);
-      console.log(data, 'data');
       setSalesInfo(data);
+      setSalesStatus(data.status);
     })();
-  }, [id]);
+  }, [id, saleStatus]);
+
+  const changeStatusOrder = async ({ target: { name } }) => {
+    await api.updateSalesProductsbySaleId(salesInfo.id, name);
+    setSalesStatus(name);
+  };
 
   return (
     <>
@@ -49,17 +55,22 @@ export default function SellerOrderDetails() {
       <span
         data-testid="seller_order_details__element-order-details-label-delivery-status"
       >
-        {salesInfo.status}
+        {saleStatus}
       </span>
       <button
         type="button"
+        name="Preparando"
+        disabled={ saleStatus !== 'Pendente' }
+        onClick={ changeStatusOrder }
         data-testid="seller_order_details__button-preparing-check"
       >
         PREPARAR PEDIDO
       </button>
       <button
         type="button"
-        disabled
+        name="Em Trânsito"
+        disabled={ saleStatus !== 'Preparando' }
+        onClick={ changeStatusOrder }
         data-testid="seller_order_details__button-dispatch-check"
       >
         SAIU PARA ENTREGA

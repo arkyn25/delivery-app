@@ -35,6 +35,8 @@ const getAllSalesBySellerId = (sellerId) => api.get(`/seller/orders/${sellerId}`
 
 const createSalesProducts = (order) => api.post('/salesProducts', order);
 const getAllSalesProductsbySaleId = (id) => api.get(`/salesProducts/${id}`);
+const updateSalesProductsbySaleId = (id, status) => api
+  .patch(`/salesProducts/${id}`, { status });
 
 const getAllProducts = () => api.get('/customer/products');
 
@@ -53,4 +55,5 @@ export default {
   registerByAdmin,
   getSaleById,
   getAllSalesBySellerId,
+  updateSalesProductsbySaleId,
 };

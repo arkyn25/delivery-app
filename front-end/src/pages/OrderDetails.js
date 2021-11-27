@@ -6,6 +6,7 @@ import convertDate from '../services/convertDate';
 import api from '../services';
 
 export default function OrderDetails() {
+  const [saleStatus, setSalesStatus] = useState('');
   const [salesInfo, setSalesInfo] = useState(
     {
       id: 0,
@@ -31,10 +32,15 @@ export default function OrderDetails() {
   useEffect(() => {
     (async () => {
       const { data } = await api.getAllSalesProductsbySaleId(id);
-      console.log(data, 'data');
       setSalesInfo(data);
+      setSalesStatus(data.status);
     })();
   }, [id]);
+
+  const changeStatusOrder = async ({ target: { name } }) => {
+    await api.updateSalesProductsbySaleId(salesInfo.id, name);
+    setSalesStatus(name);
+  };
 
   return (
     <>
@@ -53,12 +59,13 @@ export default function OrderDetails() {
       <span
         data-testid="customer_order_details__element-order-details-label-delivery-status"
       >
-        Status do pedido
-        {salesInfo.status}
+        {saleStatus}
       </span>
       <button
         type="button"
-        disabled
+        name="Entregue"
+        disabled={ saleStatus !== 'Em Trânsito' }
+        onClick={ changeStatusOrder }
         data-testid="customer_order_details__button-delivery-check"
       >
         marcar como entregue

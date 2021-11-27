@@ -26,9 +26,18 @@ const getAllSalesProductsBySeleId = rescue(async (req, res) => {
   return res.json(result);
 });
 
+const updateSalesProductsBySeleId = rescue(async (req, res) => {
+  const { id } = req.params;
+  console.log(req.body);
+  const { status } = req.body;
+  const result = await salesProductsService.updateSalesProductsBySeleId(id, status);
+  return res.json(result);
+});
+
 module.exports = {
   getAll,
   getAllByUserId,
   createSalesProducts,
   getAllSalesProductsBySeleId,
+  updateSalesProductsBySeleId,
 };

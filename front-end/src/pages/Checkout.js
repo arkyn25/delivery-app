@@ -12,10 +12,12 @@ export default function Checkout() {
   const [salesProducts, setSalesProducts] = useState([]);
   const [updateItens, setUpdateItens] = useState();
   useEffect(() => {
-    (async () => {
-      const cartProducts = JSON.parse(localStorage.getItem('products'));
-      setSalesProducts(cartProducts);
-    })();
+    const cartProducts = JSON.parse(localStorage.getItem('products'));
+    setSalesProducts(cartProducts);
+  }, []);
+  useEffect(() => {
+    const cartProducts = JSON.parse(localStorage.getItem('products'));
+    setSalesProducts(cartProducts);
   }, [updateItens]);
 
   const productPrice = (price) => {
@@ -34,54 +36,48 @@ export default function Checkout() {
     localStorage.setItem('products', JSON.stringify(salesProducts));
   };
   return (
-    <div>
-      <table>
-        <thead>
-          <tr>
-            <td>Item</td>
-            <td>Descrição</td>
-            <td>Quantidade</td>
-            <td>Valor Unitario</td>
-            <td>Sub-total</td>
-            <td>Remover Item</td>
-          </tr>
-        </thead>
-        <tbody>
-          {Object.values(salesProducts).map(({ price, quant, name, total }, index) => (
-            <tr key={ index }>
-              <td data-testid={ `${orderTable}${index}` }>{index + 1}</td>
-              <td data-testid={ `${nameTable}${index}` }>{name}</td>
-              <td data-testid={ `${quantityTable}${index}` }>{quant}</td>
-              <td data-testid={ `${unitPriceTable}${index}` }>{productPrice(price)}</td>
-              <td
-                data-testid={ `${subTotalTable}${index}` }
-              >
-                {productPrice(total.toFixed(2))}
-              </td>
-              <td>
-                <button
-                  type="button"
-                  onClick={ () => removeItem(name) }
-                  data-testid={ `${removeTable}${index}` }
-                >
-                  Remover
+    <>
+      <div>
+        <span>Item</span>
+        <span>Descrição</span>
+        <span>Quantidade</span>
+        <span>Valor Unitario</span>
+        <span>Sub-total</span>
+        <span>Remover Item</span>
+      </div>
 
-                </button>
-              </td>
-            </tr>
-          ))}
-          <tr data-testid="customer_checkout__element-order-total-price">
-            <td>
-              total=
-              {productPrice(returnTotal().toFixed(2))}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      {Object.values(salesProducts).map(({ price, quant, name, total }, index) => (
+        <div key={ index }>
+          <span data-testid={ `${orderTable}${index}` }>{index + 1}</span>
+          <span data-testid={ `${nameTable}${index}` }>{name}</span>
+          <span data-testid={ `${quantityTable}${index}` }>{quant}</span>
+          <span data-testid={ `${unitPriceTable}${index}` }>{productPrice(price)}</span>
+          <span
+            data-testid={ `${subTotalTable}${index}` }
+          >
+            {productPrice(total.toFixed(2))}
+          </span>
+          <span>
+            <button
+              type="button"
+              onClick={ () => removeItem(name) }
+              data-testid={ `${removeTable}${index}` }
+            >
+              Remover
+            </button>
+          </span>
+        </div>
+      ))}
+      <p data-testid="customer_checkout__element-order-total-price">
+        total=
+        <span>
+          {productPrice(returnTotal().toFixed(2))}
+        </span>
+      </p>
       <DetailsAddress
         totalPrice={ returnTotal().toFixed(2) }
         salesProducts={ salesProducts }
       />
-    </div>
+    </>
   );
 }

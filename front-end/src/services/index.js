@@ -21,9 +21,9 @@ const create = (data) => api.post('/login', data);
 const getAll = (data) => api.get('/login', data);
 
 const getAllSales = (tokenLogin) => api.get('/sales', config(tokenLogin));
+const getSaleById = (id) => api.get(`/sales/${id}`);
 
-const createOrder = (order) => api
-  .post('/customer/orders', order);
+const createOrder = (order) => api.post('/customer/orders', order);
 
 const getAllSalesProducts = () => api.get('/checkout');
 
@@ -31,15 +31,14 @@ const register = (data) => api.post('/register', data);
 const registerByAdmin = (data) => api.post('/register/admin', data);
 
 const getSellers = () => api.get('/sellers');
+const getAllSalesBySellerId = (sellerId) => api.get(`/seller/orders/${sellerId}`);
 
 const createSalesProducts = (order) => api.post('/salesProducts', order);
-const getAllSalesProductsbySaleId = (saleId) => api.post('/salesProducts', { saleId });
+const getAllSalesProductsbySaleId = (id) => api.get(`/salesProducts/${id}`);
+const updateSalesProductsbySaleId = (id, status) => api
+  .patch(`/salesProducts/${id}`, { status });
 
 const getAllProducts = () => api.get('/customer/products');
-
-const getAllSalesProductsById = (saleId) => api.get('/customer/orders/:id', { saleId });
-
-const getAllSalesBySellerId = (sellerId) => api.get(`/seller/orders/:${sellerId}`);
 
 export default {
   create,
@@ -51,9 +50,10 @@ export default {
   setToken,
   getSellers,
   createSalesProducts,
-  getAllSalesProductsById,
   getAllProducts,
   getAllSalesProductsbySaleId,
   registerByAdmin,
+  getSaleById,
   getAllSalesBySellerId,
+  updateSalesProductsbySaleId,
 };

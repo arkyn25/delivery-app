@@ -7,6 +7,11 @@ const getAllSalesById = async (userId) => {
   return result; 
 };
 
+const getSaleById = async (id) => {
+  const result = await Sale.findOne({ where: { id } });
+  return result;
+};
+
 const createOrder = async (body) => {
   const result = await Sale.create({ 
       ...body,
@@ -24,5 +29,6 @@ const getAllSalesBySellerId = async (sellerId) => {
 module.exports = {
   getAllSalesById,
   createOrder,
+  getSaleById,
   getAllSalesBySellerId,
 };

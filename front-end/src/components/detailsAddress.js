@@ -22,9 +22,11 @@ export default function DetailsAddress(props) {
     const { id, token } = JSON.parse(localStorage.getItem('user'));
     api.setToken(token);
     const { data } = await api.createOrder({ ...order, id, totalPrice });
-    const result = await api.createSalesProducts({
+    console.log(data, 'create order');
+    const { data: dataProducts } = await api.createSalesProducts({
       products: salesProducts, saleId: data.id });
-    console.log(result);
+    console.log(dataProducts, 'data producs');
+
     return window.location.replace(`/customer/orders/${data.id}`);
   };
 

@@ -21,10 +21,16 @@ const createOrder = rescue(async (req, res) => {
   return res.status(201).json(result);
 });
 
+const getSaleById = async (req, res) => {
+  const { id } = req.params;
+  const result = await saleService.getSaleById(id);
+  if (!result) { return res.status(404).json({ message: 'Erro ao pegar os pedido' }); }
+  return res.status(200).json(result);
+};
+
 const getAllSalesBySellerId = rescue(async (req, res) => {
   const { sellerId } = req.params;
-  const id = Number(sellerId.replace(':', ''));
-  const result = await saleService.getAllSalesBySellerId(id);
+  const result = await saleService.getAllSalesBySellerId(sellerId);
   if (!result) { return res.status(404).json({ message: 'sem pedidos para esse vendedor' }); }
   return res.status(200).json(result);
 });
@@ -32,5 +38,6 @@ const getAllSalesBySellerId = rescue(async (req, res) => {
 module.exports = {
   sales,
   createOrder,
+  getSaleById,
   getAllSalesBySellerId,
 };

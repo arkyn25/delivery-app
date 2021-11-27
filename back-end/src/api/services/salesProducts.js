@@ -1,28 +1,34 @@
-const { Sale, Product, SalesProducts } = require('../../database/models');
+const { Sale, Product, SalesProducts, User } = require('../../database/models');
 
 const getAllSalesProductsBySeleId = async (saleId) => {
-  const result = await SalesProducts.findAll({
-    raw: true,
-    where: { saleId },
-    include: [{ model: Product, as: 'products' }],
+  const result = await Sale.findOne({
+    where: { id: saleId },
+    include: [
+      { model: Product, as: 'products', through: { attributes: ['quantity'] } },
+      { model: User, as: 'seller' },
+    ],
   });
-  // const products = result.map(async ({ productId }) => Product.findOne({
-  //   raw: true,
-  //   where: { id: productId },
-  // }));
 
-  // const data = Promise.all(products);
+  return result;
+};
+
+const updateSalesProductsBySeleId = async (id, status) => {
+  const result = await Sale.update(
+    { status },
+    { where: { id } },
+  );
+
   return result;
 };
 
 const getAll = async () => Sale.findAll({
   attributes: { exclude: ['urlImage'] },
-  include: [{ model: Product, as: 'products' }],
+  include: [{ model: Product, as: 'products', through: { attributes: [] } }],
 });
 
 const getAllByUserId = async ({ id }) => Sale.findAll({
   where: { userId: id },
-    include: [{ model: Product, as: 'products', through: { attributes: [] } }] });
+  include: [{ model: Product, as: 'products', through: { attributes: [] } }] });
 
 const createSalesProducts = async (body) => {
   const { products, saleId } = body;
@@ -33,6 +39,7 @@ const createSalesProducts = async (body) => {
     });
    await SalesProducts.create({ saleId, productId, quantity: quant });
   });
+
   return true;
 };
 
@@ -41,4 +48,5 @@ module.exports = {
   getAllByUserId,
   createSalesProducts,
   getAllSalesProductsBySeleId,
+  updateSalesProductsBySeleId,
 };

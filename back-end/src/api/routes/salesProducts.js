@@ -2,8 +2,8 @@ const router = require('express').Router();
 const salesProductsController = require('../controllers/salesProducts');
 
 router.get('/checkout', salesProductsController.getAll);
-router.get('/customer/orders/:id', salesProductsController.getAllSalesProductsBySeleId);
+router.get('/salesProducts/:id', salesProductsController.getAllSalesProductsBySeleId);
+router.patch('/salesProducts/:id', salesProductsController.updateSalesProductsBySeleId);
 router.post('/salesProducts', salesProductsController.createSalesProducts);
-router.get('/salesProducts', salesProductsController.getAllSalesProductsBySeleId);
 
 module.exports = router;

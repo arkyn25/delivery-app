@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import NavBar from '../components/navBar';
-import OrderTable from '../components/orderTable';
 import convertDate from '../services/convertDate';
 import api from '../services';
+import SellerCardDetails from '../components/sellerCardDetails';
 
-export default function OrderDetails() {
-  const [saleStatus, setSalesStatus] = useState('');
+export default function SellerOrderDetails() {
+  const [saleStatus, setSalesStatus] = useState('Pendente');
   const [salesInfo, setSalesInfo] = useState(
     {
       id: 0,
@@ -35,7 +35,7 @@ export default function OrderDetails() {
       setSalesInfo(data);
       setSalesStatus(data.status);
     })();
-  }, [id]);
+  }, [id, saleStatus]);
 
   const changeStatusOrder = async ({ target: { name } }) => {
     await api.updateSalesProductsbySaleId(salesInfo.id, name);
@@ -46,31 +46,36 @@ export default function OrderDetails() {
     <>
       <NavBar />
       <p>Detalhe do pedido</p>
-      <span data-testid="customer_order_details__element-order-details-label-order-id">
+      <span data-testid="seller_order_details__element-order-details-label-order-id">
         { salesInfo.id }
       </span>
-      <span data-testid="customer_order_details__element-order-details-label-seller-name">
-        { salesInfo.seller.name }
-      </span>
-      <span data-testid="customer_order_details__element-order-details-label-order-date">
+      <span data-testid="seller_order_details__element-order-details-label-order-date">
         { convertDate(salesInfo.sale_date) }
-        {/* {console.log(sale, 'sale ----')} */}
       </span>
       <span
-        data-testid="customer_order_details__element-order-details-label-delivery-status"
+        data-testid="seller_order_details__element-order-details-label-delivery-status"
       >
         {saleStatus}
       </span>
       <button
         type="button"
-        name="Entregue"
-        disabled={ saleStatus !== 'Em Trânsito' }
+        name="Preparando"
+        disabled={ saleStatus !== 'Pendente' }
         onClick={ changeStatusOrder }
-        data-testid="customer_order_details__button-delivery-check"
+        data-testid="seller_order_details__button-preparing-check"
       >
-        marcar como entregue
+        PREPARAR PEDIDO
       </button>
-      <OrderTable salesInfo={ salesInfo } />
+      <button
+        type="button"
+        name="Em Trânsito"
+        disabled={ saleStatus !== 'Preparando' }
+        onClick={ changeStatusOrder }
+        data-testid="seller_order_details__button-dispatch-check"
+      >
+        SAIU PARA ENTREGA
+      </button>
+      <SellerCardDetails salesInfo={ salesInfo } />
     </>
   );
 }

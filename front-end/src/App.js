@@ -8,6 +8,8 @@ import Admin from './pages/Admin';
 import OrderClient from './pages/OrderClient';
 import Checkout from './pages/Checkout';
 import OrderDetails from './pages/OrderDetails';
+import OrderSeller from './pages/OrderSeller';
+import SellerOrderDetails from './pages/SellerOrderDetails';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
       <Route path="customer/orders/" element={ <OrderClient /> } />
       <Route path="customer/orders/:id" element={ <OrderDetails /> } />
       <Route path="customer/checkout" element={ <Checkout /> } />
+      <Route path="seller/orders" element={ <OrderSeller /> } />
+      <Route path="seller/orders/:id" element={ <SellerOrderDetails /> } />
     </Routes>
   );
 }

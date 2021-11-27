@@ -23,8 +23,7 @@ const getAll = (data) => api.get('/login', data);
 const getAllSales = (tokenLogin) => api.get('/sales', config(tokenLogin));
 const getSaleById = (id) => api.get(`/sales/${id}`);
 
-const createOrder = (order) => api
-  .post('/customer/orders', order);
+const createOrder = (order) => api.post('/customer/orders', order);
 
 const getAllSalesProducts = () => api.get('/checkout');
 
@@ -32,6 +31,7 @@ const register = (data) => api.post('/register', data);
 const registerByAdmin = (data) => api.post('/register/admin', data);
 
 const getSellers = () => api.get('/sellers');
+const getAllSalesBySellerId = (sellerId) => api.get(`/seller/orders/${sellerId}`);
 
 const createSalesProducts = (order) => api.post('/salesProducts', order);
 const getAllSalesProductsbySaleId = (id) => api.get(`/salesProducts/${id}`);
@@ -52,4 +52,5 @@ export default {
   getAllSalesProductsbySaleId,
   registerByAdmin,
   getSaleById,
+  getAllSalesBySellerId,
 };

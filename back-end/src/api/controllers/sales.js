@@ -28,8 +28,16 @@ const getSaleById = async (req, res) => {
   return res.status(200).json(result);
 };
 
+const getAllSalesBySellerId = rescue(async (req, res) => {
+  const { sellerId } = req.params;
+  const result = await saleService.getAllSalesBySellerId(sellerId);
+  if (!result) { return res.status(404).json({ message: 'sem pedidos para esse vendedor' }); }
+  return res.status(200).json(result);
+});
+
 module.exports = {
   sales,
   createOrder,
   getSaleById,
+  getAllSalesBySellerId,
 };

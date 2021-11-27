@@ -5,7 +5,7 @@ const redirect = ({ role }) => {
   switch (role) {
   case 'administrator': return window.location.replace('/admin/manage');
   case 'customer': return window.location.replace('/customer/products');
-  case 'seller': return window.location.replace('/customer/seller');
+  case 'seller': return window.location.replace('/seller/orders');
   default:
     break;
   }

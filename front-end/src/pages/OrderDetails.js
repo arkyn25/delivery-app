@@ -6,7 +6,6 @@ export default function OrderDetails() {
   return (
     <>
       <NavBar />
-
       <p>Detalhe do pedido</p>
       <span data-testid="customer_order_details__element-order-details-label-order-id">
         id

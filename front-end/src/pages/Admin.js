@@ -31,6 +31,8 @@ export default function Admin() {
   const [role, setRole] = useState('customer');
   const [isErr, setIsErr] = useState(false);
 
+  const invalidRegister = 'admin_manage__element-invalid-register';
+
   useEffect(() => {
     const disabled = state.$all_source_errors.length !== 0;
     setIsDisable(disabled);
@@ -64,11 +66,13 @@ export default function Admin() {
 
   const updateRole = (e) => setRole(e.target.value);
 
-  const register = async () => {
+  const registerByAdmin = async () => {
     try {
       const info = { ...state.$data, role };
       // console.log(info);
-      await api.register(info);
+      const storage = JSON.parse(localStorage.getItem('user'));
+      api.setToken(storage.token);
+      await api.registerByAdmin(info);
     } catch (error) {
       setIsErr(true);
     }
@@ -124,7 +128,7 @@ export default function Admin() {
             data-testid="admin_manage__select-role"
             onChange={ updateRole }
           >
-            <option defaultValue="customer">Cliente</option>
+            <option value="customer">Cliente</option>
             <option value="seller">Vendedor</option>
             <option value="administrator">Administrador</option>
           </select>
@@ -137,12 +141,12 @@ export default function Admin() {
         name="register"
         data-testid="admin_manage__button-register"
         disabled={ isDisabled }
-        onClick={ async () => { validate(); await register(); } }
+        onClick={ async () => { validate(); await registerByAdmin(); } }
       >
         CADASTRAR
       </button>
 
-      {isErr && <p>Erro: Email já cadastrado </p>}
+      {isErr && <p data-testid={ invalidRegister }> Erro: Email já cadastrado</p>}
     </>
   );
 }

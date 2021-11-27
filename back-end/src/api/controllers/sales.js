@@ -41,3 +41,4 @@ module.exports = {
   getSaleById,
   getAllSalesBySellerId,
 };
+

@@ -12,7 +12,6 @@ const sales = rescue(async (req, res) => {
 });
 
 const createOrder = rescue(async (req, res) => {
-  // const token = req.headers.authorization;
   const { id } = req.body;
   delete req.body.id;
   const result = await saleService.createOrder({

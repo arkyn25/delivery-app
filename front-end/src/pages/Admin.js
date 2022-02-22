@@ -48,7 +48,6 @@ export default function Admin() {
 
   const updateEmail = (e) => {
     e.persist();
-
     setData((old) => ({
       ...old,
       email: e.target.value,
@@ -69,7 +68,6 @@ export default function Admin() {
   const registerByAdmin = async () => {
     try {
       const info = { ...state.$data, role };
-      // console.log(info);
       const storage = JSON.parse(localStorage.getItem('user'));
       api.setToken(storage.token);
       await api.registerByAdmin(info);

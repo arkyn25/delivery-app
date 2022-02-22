@@ -34,7 +34,6 @@ export default function Login() {
   }, [state]);
 
   const updateEmail = (e) => {
-    // react < v17
     e.persist();
     setData((old) => ({
       ...old,
